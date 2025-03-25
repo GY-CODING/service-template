@@ -7,7 +7,6 @@ WORKDIR /app
 ARG SPRING_PROFILE
 ARG SPRING_PORT
 ARG ALLOWED_API_KEY
-ARG NOTIFICATIONS_MONGO_URI
 ARG LOGS_URL
 ARG LOGS_AUTH_TOKEN
 ARG GITHUB_USERNAME
@@ -16,7 +15,6 @@ ARG GITHUB_TOKEN
 ENV SPRING_PROFILE=${SPRING_PROFILE}
 ENV SPRING_PORT=${SPRING_PORT}
 ENV ALLOWED_API_KEY=${ALLOWED_API_KEY}
-ENV NOTIFICATIONS_MONGO_URI=${NOTIFICATIONS_MONGO_URI}
 ENV LOGS_URL=${LOGS_URL}
 ENV LOGS_AUTH_TOKEN=${LOGS_AUTH_TOKEN}
 ENV GITHUB_USERNAME=${GITHUB_USERNAME}
@@ -47,7 +45,6 @@ WORKDIR /app
 ARG SPRING_PROFILE
 ARG SPRING_PORT
 ARG ALLOWED_API_KEY
-ARG NOTIFICATIONS_MONGO_URI
 ARG LOGS_URL
 ARG LOGS_AUTH_TOKEN
 ARG GITHUB_USERNAME
@@ -56,7 +53,6 @@ ARG GITHUB_TOKEN
 ENV SPRING_PROFILE=${SPRING_PROFILE}
 ENV SPRING_PORT=${SPRING_PORT}
 ENV ALLOWED_API_KEY=${ALLOWED_API_KEY}
-ENV NOTIFICATIONS_MONGO_URI=${NOTIFICATIONS_MONGO_URI}
 ENV LOGS_URL=${LOGS_URL}
 ENV LOGS_AUTH_TOKEN=${LOGS_AUTH_TOKEN}
 ENV GITHUB_USERNAME=${GITHUB_USERNAME}
@@ -66,13 +62,13 @@ ENV GITHUB_TOKEN=${GITHUB_TOKEN}
 COPY src/main/resources/settings.xml /root/.m2/settings.xml
 
 # Copy the JAR file from the build stage to the current directory
-COPY --from=build /app/target/*.jar ./gy-notifications.jar
+COPY --from=build /app/target/*.jar ./service.jar
 
 # Ensure the JAR file has the correct permissions
-RUN chmod 777 /app/gy-notifications.jar
+RUN chmod 777 /app/service.jar
 
 # Expose the port on which the application will run
-EXPOSE 8005
+EXPOSE 8001
 
 # Set the command to run the application
-CMD ["java", "-jar", "gy-notifications.jar"]
+CMD ["java", "-jar", "service.jar"]
