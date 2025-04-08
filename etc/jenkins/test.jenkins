@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    environment {
+        KOYEB_EMAIL = credentials('SERVICE_KOYEB_EMAIL')
+        KOYEB_PASSWORD = credentials('SERVICE_KOYEB_PASSWORD')
+        KOYEB_SERVICE_ID = credentials('SERVICE_KOYEB_SERVICE_ID')
+    }
+
+    stages {
+        stage('Check SCM branch') {
+            steps {
+                git branch: 'main', url: 'https://github.com/GY-CODING/gy-accounts-service.git'
+            }
+        }
+    }
+}
